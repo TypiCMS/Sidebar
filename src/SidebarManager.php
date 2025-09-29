@@ -2,29 +2,24 @@
 
 namespace TypiCMS\Modules\Sidebar;
 
+use Stringable;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Routing\ResolvesRouteDependencies;
 use Illuminate\Support\Collection;
 use ReflectionFunction;
 
-class SidebarManager
+class SidebarManager implements Stringable
 {
     use ResolvesRouteDependencies;
-
-    protected Container $container;
-
-    protected SidebarGroup $group;
 
     protected bool $withoutGroupHeading = false;
 
     /** @var Collection<string, SidebarGroup> */
     public Collection $groups;
 
-    public function __construct(Container $container, SidebarGroup $group)
+    public function __construct(protected Container $container, protected SidebarGroup $group)
     {
-        $this->container = $container;
-        $this->group = $group;
         $this->groups = new Collection();
     }
 
@@ -51,11 +46,7 @@ class SidebarManager
 
     public function group(string $name, ?Closure $callback = null): SidebarGroup
     {
-        if (!$this->groupExists($name)) {
-            $group = $this->group->init($name);
-        } else {
-            $group = $this->getGroup($name);
-        }
+        $group = $this->groupExists($name) ? $this->getGroup($name) : $this->group->init($name);
 
         if ($callback instanceof Closure) {
             // Make dependency injection possible

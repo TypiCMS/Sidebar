@@ -86,7 +86,7 @@ class SidebarGroup
 
     public function hasItems(): bool
     {
-        return count($this->items) > 0 ? true : false;
+        return count($this->items) > 0;
     }
 
     /** @return Collection<int, SidebarItem> */

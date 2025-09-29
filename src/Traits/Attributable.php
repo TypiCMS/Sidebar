@@ -11,7 +11,7 @@ trait Attributable
 
     public function cleanInstance(): self
     {
-        return $this->container->make(get_class($this));
+        return $this->container->make($this::class);
     }
 
     public function setAttribute(string $attribute, mixed $value): self
@@ -32,13 +32,9 @@ trait Attributable
         return $value;
     }
 
-    public function getRawAttribute(string $attribute, ?string $value = null): mixed
+    protected function getRawAttribute(string $attribute, ?string $value = null): mixed
     {
-        if (isset($this->attributes[$attribute])) {
-            $value = $this->attributes[$attribute];
-        }
-
-        return $value;
+        return $this->attributes[$attribute] ?? $value;
     }
 
     public function hasMutator(string $attribute): bool

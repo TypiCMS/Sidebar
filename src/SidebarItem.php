@@ -49,7 +49,7 @@ class SidebarItem
 
     public function getState(?string $value = null): ?string
     {
-        if (!$value && $this->checkActiveState()) {
+        if (($value === null || $value === '') && $this->checkActiveState()) {
             return 'active';
         }
 
