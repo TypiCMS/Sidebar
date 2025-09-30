@@ -2,12 +2,12 @@
 
 namespace TypiCMS\Modules\Sidebar;
 
-use Stringable;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Routing\ResolvesRouteDependencies;
 use Illuminate\Support\Collection;
 use ReflectionFunction;
+use Stringable;
 
 class SidebarManager implements Stringable
 {
